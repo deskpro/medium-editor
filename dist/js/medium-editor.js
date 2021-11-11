@@ -6736,6 +6736,11 @@ MediumEditor.extensions = {};
             return;
         }
 
+        // Ignore composing keyUp event, prevent from duplicated first char with CJK IME.
+        if (event.isComposing || event.keyCode === 229) {
+            return;
+        }
+
         // https://github.com/yabwe/medium-editor/issues/994
         // Firefox thrown an error when calling `formatBlock` on an empty editable blockContainer that's not a <div>
         if (MediumEditor.util.isMediumEditorElement(node) && node.children.length === 0 && !MediumEditor.util.isBlockContainer(node)) {
