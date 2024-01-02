@@ -202,9 +202,8 @@
 
             tagName = node.nodeName.toLowerCase();
             // For anchor tags, unlink
-            if (tagName === 'a') {
-                this.options.ownerDocument.execCommand('unlink', false, null);
-            } else if (!event.shiftKey && !event.ctrlKey) {
+            // sc-135150 changed the link listener to keyup so we don't trigger the main form
+            if (tagName !== 'a' && !event.shiftKey && !event.ctrlKey) {
                 this.options.ownerDocument.execCommand('formatBlock', false, 'p');
                 // https://github.com/yabwe/medium-editor/issues/1455
                 // firefox puts the focus on the br - so we need to move the cursor to the newly created p

@@ -4039,7 +4039,7 @@ MediumEditor.extensions = {};
             this.on(form, 'click', this.handleFormClick.bind(this));
 
             // Handle typing in the textbox
-            this.on(input, 'keyup', this.handleTextboxKeyup.bind(this));
+            this.on(input, 'keydown', this.handleTextboxKeydown.bind(this));
 
             // Handle close button clicks
             this.on(close, 'click', this.handleCloseClick.bind(this));
@@ -4074,7 +4074,7 @@ MediumEditor.extensions = {};
             return this.getForm().querySelector('.medium-editor-toolbar-anchor-button');
         },
 
-        handleTextboxKeyup: function (event) {
+        handleTextboxKeydown: function (event) {
             // For ENTER -> create the anchor
             if (event.keyCode === MediumEditor.util.keyCode.ENTER) {
                 event.preventDefault();
@@ -6836,9 +6836,8 @@ MediumEditor.extensions = {};
 
             tagName = node.nodeName.toLowerCase();
             // For anchor tags, unlink
-            if (tagName === 'a') {
-                this.options.ownerDocument.execCommand('unlink', false, null);
-            } else if (!event.shiftKey && !event.ctrlKey) {
+            // sc-135150 changed the link listener to keyup so we don't trigger the main form
+            if (tagName !== 'a' && !event.shiftKey && !event.ctrlKey) {
                 this.options.ownerDocument.execCommand('formatBlock', false, 'p');
                 // https://github.com/yabwe/medium-editor/issues/1455
                 // firefox puts the focus on the br - so we need to move the cursor to the newly created p

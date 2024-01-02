@@ -303,7 +303,7 @@
             this.on(form, 'click', this.handleFormClick.bind(this));
 
             // Handle typing in the textbox
-            this.on(input, 'keyup', this.handleTextboxKeyup.bind(this));
+            this.on(input, 'keydown', this.handleTextboxKeydown.bind(this));
 
             // Handle close button clicks
             this.on(close, 'click', this.handleCloseClick.bind(this));
@@ -338,7 +338,7 @@
             return this.getForm().querySelector('.medium-editor-toolbar-anchor-button');
         },
 
-        handleTextboxKeyup: function (event) {
+        handleTextboxKeydown: function (event) {
             // For ENTER -> create the anchor
             if (event.keyCode === MediumEditor.util.keyCode.ENTER) {
                 event.preventDefault();
