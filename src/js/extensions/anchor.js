@@ -342,6 +342,7 @@
             // For ENTER -> create the anchor
             if (event.keyCode === MediumEditor.util.keyCode.ENTER) {
                 event.preventDefault();
+                event.stopPropagation();
                 this.doFormSave();
                 return;
             }
